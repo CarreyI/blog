@@ -1,0 +1,55 @@
+# config
+cover: /img/bg_img.jpg
+logo: /img/logo.png
+top_saying:
+- title: PROGRAMMING CHANGE EVERYTHING, WELCOME.
+- content: 编程改变一切
+bottom_saying: 给你一个眼神，自己去领悟
+# Content
+excerpt_link: Read More
+
+rss: false
+
+highlightjs: vs
+
+#Works
+#works:
+#- works_name: 
+#  works_url: 
+
+#duoshuo name
+duoshuo: Carrey
+
+#disqus_shortname
+disqus: Carrey
+
+# Miscellaneous
+github: https://github.com/CarreyI
+twitter: https://twitter.com/CarreyIII
+facebook: https://www.facebook.com/
+google: https://plus.google.com/u/0/113709521216279732219/posts/p/pub
+weibo: http://weibo.com/
+
+#about  timeline
+timeline:
+- num: 1
+  word: Hello World
+- num: 2
+  word: 迷茫
+- num: 3
+  word: 励志
+- num: 4
+  word: 奋斗
+
+#Links
+links:
+- name: PengXiang.Zhang 
+  link: http://www.zhangpengxiang.com
+- name: ChengQing.Li
+  link: http://blog.csdn.net/lcq_ahead
+- name: XianYang.Li
+  link: http://blog.csdn.net/lxy871008
+- name: lei.xiang
+  link: http://slaytanic.blog.51cto.com
+
+
