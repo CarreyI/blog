@@ -66,7 +66,7 @@ public class helloworld{
     }
 }
 ```
-然后将他编译打成jar包，没有指定添加MANIFEST.MF文件或没有执行main方法所在的类，使用java -jar helloworld.jar会报no main manifest attribute, in helloworld.jar错误，这种情况就可以使用java -classpath helloworld.jar helloworld命令指定main class执行
+然后将他编译打成jar包，没有指定添加MANIFEST.MF文件或没有执定main方法所在的类，使用java -jar helloworld.jar会报no main manifest attribute, in helloworld.jar错误，这种情况就可以使用java -classpath helloworld.jar helloworld命令指定main class执行
 
 ### 执行jar包中包含jar包的jar包
 ``` bash
