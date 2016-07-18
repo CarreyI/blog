@@ -19,7 +19,7 @@ Hadoop 还提供了软件基础架构，以一系列 map 和 reduce 任务的形
 * 许多称为 TaskTracker 的下级进程，它们运行分配的任务并定期向 JobTracker 报告进度。
 
 ### Apache Hadoop 的经典版本 (MRv1)
-![该图显示了 Apache Hadoop 的经典版本 (MRv1)](http://www.ibm.com/developerworks/cn/data/library/bd-yarn-intro/fig01.png)
+![该图显示了 Apache Hadoop 的经典版本 (MRv1)](/img/post_4/1.png)
 大型的 Hadoop 集群显现出了由单个 JobTracker 导致的可伸缩性瓶颈。依据 Yahoo!，在集群中有 5,000 个节点和 40,000 个任务同时运行时，这样一种设计实际上就会受到限制。由于此限制，必须创建和维护更小的、功能更差的集群。
 此外，较小和较大的 Hadoop 集群都从未最高效地使用他们的计算资源。在 Hadoop MapReduce 中，每个从属节点上的计算资源由集群管理员分解为固定数量的 map 和 reduce slot，这些 slot 不可替代。设定 map slot 和 reduce slot 的数量后，节点在任何时刻都不能运行比 map slot 更多的 map 任务，即使没有 reduce 任务在运行。这影响了集群的利用率，因为在所有 map slot 都被使用（而且我们还需要更多）时，我们无法使用任何 reduce slot，即使它们可用，反之亦然。
 最后但同样重要的是，Hadoop 设计为仅运行 MapReduce 作业。随着替代性的编程模型（比如 Apache Giraph 所提供的图形处理）的到来，除 MapReduce 外，越来越需要为可通过高效的、公平的方式在同一个集群上运行并共享资源的其他编程模型提供支持。
@@ -33,7 +33,7 @@ Hadoop 还提供了软件基础架构，以一系列 map 和 reduce 任务的形
 为单个进程安排大量职责会导致重大的可伸缩性问题，尤其是在较大的集群上，JobTracker 必须不断跟踪数千个 TaskTracker、数百个作业，以及数万个 map 和 reduce 任务。下图演示了这一问题。相反，TaskTracker 通常近运行十来个任务，这些任
 务由勤勉的 JobTracker 分配给它们。
 ### 大型 Apache Hadoop 集群 (MRv1) 上繁忙的 JobTracker
-![该图显示了大型 Apache Hadoop 集群 (MRv1) 上繁忙的 JobTracker](http://www.ibm.com/developerworks/cn/data/library/bd-yarn-intro/Figure2JobTracker-Busy.png)
+![该图显示了大型 Apache Hadoop 集群 (MRv1) 上繁忙的 JobTracker](/img/post_4/2.png)
 为了解决可伸缩性问题，一个简单而又绝妙的想法应运而生：我们减少了单个 JobTracker 的职责，将部分职责委派给 TaskTracker，因为集群中有许多 TaskTracker。在新设计中，这个概念通过将 JobTracker 的双重职责（集群资源管理和任务协调）分开为两种不同类型的进程来反映。
 不再拥有单个 JobTracker，一种新方法引入了一个集群管理器，它惟一的职责就是跟踪集群中的活动节点和可用资源，并将它们分配给任务。对于提交给集群的每个作业，会启动一个专用的、短暂的 JobTracker 来控制该作业中的任务的执行。有趣的是，短暂的 JobTracker 由在从属节点上运行的 TaskTracker 启动。因此，作业的生命周期的协调工作分散在集群中所有可用的机器上。得益于这种行为，更多工作可并行运行，可伸缩性得到了显著提高。
 ## YARN：下一代 Hadoop 计算平台
@@ -45,7 +45,7 @@ Hadoop 还提供了软件基础架构，以一系列 map 和 reduce 任务的形
 
 YARN 是下一代 Hadoop 计算平台，如下所示。
 ### YARN 的架构
-![该图显示了 YARN 的架构](http://www.ibm.com/developerworks/cn/data/library/bd-yarn-intro/Figure3Architecture-of-YARN.png)
+![该图显示了 YARN 的架构](/img/post_4/3.png)
 在 YARN 架构中，一个全局 ResourceManager 以主要后台进程的形式运行，它通常在专用机器上运行，在各种竞争的应用程序之间仲裁可用的集群资源。ResourceManager 会追踪集群中有多少可用的活动节点和资源，协调用户提交的哪些应用程序应该在何时获取这些资源。ResourceManager 是惟一拥有此信息的进程，所以它可通过某种共享的、安全的、多租户的方式制定分配（或者调度）决策（例如，依据应用程序优先级、队列容量、ACLs、数据位置等）。
 在用户提交一个应用程序时，一个称为 ApplicationMaster 的轻量型进程实例会启动来协调应用程序内的所有任务的执行。这包括监视任务，重新启动失败的任务，推测性地运行缓慢的任务，以及计算应用程序计数器值的总和。这些职责以前分配给所有作业的单个 JobTracker。ApplicationMaster 和属于它的应用程序的任务，在受 NodeManager 控制的资源容器中运行。
 NodeManager 是 TaskTracker 的一种更加普通和高效的版本。没有固定数量的 map 和 reduce slots，NodeManager 拥有许多动态创建的资源容器。容器的大小取决于它所包含的资源量，比如内存、CPU、磁盘和网络 IO。目前，仅支持内存和 CPU (YARN-3)。未来可使用 cgroups 来控制磁盘和网络 IO。一个节点上的容器数量，由配置参数与专用于从属后台进程和操作系统的资源以外的节点资源总量（比如总 CPU 数和总内存）共同决定。
@@ -65,7 +65,7 @@ ResourceManager、NodeManager 和容器都不关心应用程序或任务的类�
 ## YARN 中的应用程序提交
 本节讨论在应用程序提交到 YARN 集群时，ResourceManager、ApplicationMaster、NodeManagers 和容器如何相互交互。下图显示了一个例子。
 ### YARN 中的应用程序提交
-![YARN 中的应用程序提交](http://www.ibm.com/developerworks/cn/data/library/bd-yarn-intro/fig04.png)
+![YARN 中的应用程序提交](/img/post_4/4.png)
 假设用户采用与 MRv1 中相同的方式键入 hadoop jar 命令，将应用程序提交到 ResourceManager。ResourceManager 维护在集群上运行的应用程序列表，以及每个活动的 NodeManager 上的可用资源列表。ResourceManager 需要确定哪个应用程序接下来应该获得一部分集群资源。该决策受到许多限制，比如队列容量、ACL 和公平性。ResourceManager 使用一个可插拔的 Scheduler。Scheduler 仅执行调度；它管理谁在何时获取集群资源（以容器的形式），但不会对应用程序内的任务执行任何监视，所以它不会尝试重新启动失败的任务。
 在 ResourceManager 接受一个新应用程序提交时，Scheduler 制定的第一个决策是选择将用来运行 ApplicationMaster 的容器。在 ApplicationMaster 启动后，它将负责此应用程序的整个生命周期。首先也是最重要的是，它将资源请求发送到 ResourceManager，请求运行应用程序的任务所需的容器。资源请求是对一些容器的请求，用以满足一些资源需求，比如：
 * 一定量的资源，目前使用 MB 内存和 CPU 份额来表示
