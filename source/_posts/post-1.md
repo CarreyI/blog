@@ -33,7 +33,7 @@ cp /usr/local/mariadb/support-files/my-large.cnf /etc/my.cnf
 ```
 16.    初始化数据库
 ```bash
-/usr/local/mariadb/scripts/mysql_install_db --user=mysql
+/usr/local/mariadb/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mariadb --datadir=/usr/local/mariadb/data
 ```
 17.    添加环境变量
 +    运行命令打开系统文件`vi /etc/profile`
@@ -41,7 +41,7 @@ cp /usr/local/mariadb/support-files/my-large.cnf /etc/my.cnf
 ```bash
 MYSQL_HOME=/usr/local/mariadb
 PATH=$MYSQL_HOME/bin:$PATH
-export $PATH
+export PATH
 ```
 18.    mariadb开机自启动
 ```bash
