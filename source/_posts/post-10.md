@@ -56,7 +56,7 @@ yum install libmcrypt-devel libxml2-devel openssl-devel libcurl-devel libjpeg-de
 ``` shell
 tar -zxvf php-7.1.0.tar.gz
 cd php-7.1.0
-./configure --prefix=/usr/php7 --with-apxs2=/usr/apache2/bin/apxs --enable-mbstring --with-curl --with-gd --enable-fpm --enable-mysqlnd --with-config-file-path=/usr/php7/etc --with-pdo-mysql=mysqlnd --with-mysql-sock=/var/lib/mysql/mysql.sock --with-openssl --with-zlib --with-iconv
+./configure --prefix=/usr/php7 --with-apxs2=/usr/apache2/bin/apxs --enable-mbstring --with-curl --with-gd --enable-fpm --enable-mysqlnd --with-config-file-path=/usr/php7/etc --with-pdo-mysql=mysqlnd --with-mysql-sock=/var/lib/mysql/mysql.sock --with-openssl --with-zlib --with-iconv --with-mysqli
 make && make install
 ```
 安装完之后配置php
